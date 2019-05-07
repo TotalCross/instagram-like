@@ -1,5 +1,6 @@
 package com.totalcross.sample.iglike.ui;
 
+import com.totalcross.sample.iglike.model.Post;
 import com.totalcross.sample.iglike.util.Colors;
 import com.totalcross.sample.iglike.util.Fonts;
 import com.totalcross.sample.iglike.util.Images;
@@ -12,7 +13,6 @@ import totalcross.ui.Label;
 import totalcross.ui.MainWindow;
 import totalcross.ui.event.Event;
 import totalcross.ui.event.PenEvent;
-import totalcross.ui.image.Image;
 import totalcross.util.UnitsConverter;
 
 public class FeedCard extends Container {
@@ -26,9 +26,13 @@ public class FeedCard extends Container {
 	private int feedCardHeight;
 	private int imageHeight;
 
-	public FeedCard(Image image) {
+	private Post post;
 
-		feedImage = new ImageControl(Images.getScaledDimension(image, MainWindow.getMainWindow().getWidth(),
+	public FeedCard(Post post) {
+
+		this.post = post;
+
+		feedImage = new ImageControl(Images.getScaledDimension(post.getPhoto(), MainWindow.getMainWindow().getWidth(),
 				MainWindow.getMainWindow().getHeight()));
 		feedImage.scaleToFit = true;
 		feedImage.centerImage = true;
@@ -55,12 +59,12 @@ public class FeedCard extends Container {
 
 		add(info, AFTER + MaterialConstants.EIGHT_DP_SPACING, CENTER_OF, FILL, MaterialConstants.PROFILE_SIZE);
 
-		Label profileName = new Label("Wanderlust");
+		Label profileName = new Label(post.getProfileName());
 		profileName.setFont(Fonts.latoLightasBold);
 
 		info.add(profileName, LEFT, TOP);
 
-		Label location = new Label("São Paulo, Brazil");
+		Label location = new Label(post.getLocation());
 		location.setFont(Fonts.latoLightMinus2);
 
 		info.add(location, LEFT, AFTER + MaterialConstants.TWO_DP_SPACING);
@@ -98,22 +102,22 @@ public class FeedCard extends Container {
 		add(save, RIGHT - MaterialConstants.BORDER_SPACING, CENTER_OF, MaterialConstants.ICONS_SIZE,
 				MaterialConstants.ICONS_SIZE);
 
-		Label curtidas = new Label("13 likes");
+		Label curtidas = new Label(post.getLikes() + " likes");
 		curtidas.setFont(Fonts.latoLightasBold);
 
 		add(curtidas, LEFT + MaterialConstants.BORDER_SPACING, AFTER + MaterialConstants.EIGHT_DP_SPACING);
 
-		profileName = new Label("Wanderlust");
+		profileName = new Label(post.getProfileName());
 		profileName.setFont(Fonts.latoLightasBold);
 
 		add(profileName, LEFT + MaterialConstants.BORDER_SPACING, AFTER + MaterialConstants.EIGHT_DP_SPACING);
 
-		Label text = new Label("Such a nice day to create an app with #TotalCross");
+		Label text = new Label(post.getText());
 		text.setFont(Fonts.latoLightDefaultSize);
 
 		add(text, AFTER + MaterialConstants.FOUR_DP_SPACING, SAME);
 
-		Label posted = new Label("Posted 30 minutes ago");
+		Label posted = new Label("Posted " + post.getMinutesAgo() + " minutes ago");
 		posted.setFont(Fonts.latoLightMinus2);
 		posted.setForeColor(Colors.DARK_GRAY);
 

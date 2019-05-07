@@ -1,9 +1,12 @@
 package com.totalcross.sample.iglike;
 
+import java.util.List;
+
+import com.totalcross.sample.iglike.dao.PostDAO;
+import com.totalcross.sample.iglike.model.Post;
 import com.totalcross.sample.iglike.ui.FeedCard;
 import com.totalcross.sample.iglike.ui.Footer;
 import com.totalcross.sample.iglike.ui.Header;
-import com.totalcross.sample.iglike.util.Images;
 import com.totalcross.sample.iglike.util.MaterialConstants;
 
 import totalcross.sys.Settings;
@@ -30,7 +33,11 @@ public class IGLike extends MainWindow {
 	public void initUI() {
 		try {
 
+			PostDAO dao = new PostDAO();
+
 			ScrollContainer sc = new ScrollContainer(false, true);
+
+			// Header and Footer control to provide similar look adn feel...
 			Header header = new Header();
 			Footer footer = new Footer();
 			add(header, LEFT, TOP, FILL, MaterialConstants.EDIT_HEIGHT);
@@ -38,14 +45,19 @@ public class IGLike extends MainWindow {
 
 			add(sc, LEFT, AFTER, FILL, FIT, header);
 
-			FeedCard feedCard = new FeedCard(Images.feedImage2);
-			sc.add(feedCard, LEFT, TOP + MaterialConstants.BORDER_SPACING, SCREENSIZE, feedCard.getFeedCardHeight());
-			feedCard = new FeedCard(Images.feedImage3);
-			sc.add(feedCard, LEFT, AFTER + MaterialConstants.BORDER_SPACING, SCREENSIZE, feedCard.getFeedCardHeight());
-			feedCard = new FeedCard(Images.feedImage4);
-			sc.add(feedCard, LEFT, AFTER + MaterialConstants.BORDER_SPACING, SCREENSIZE, feedCard.getFeedCardHeight());
-			feedCard = new FeedCard(Images.feedImage1);
-			sc.add(feedCard, LEFT, AFTER + MaterialConstants.BORDER_SPACING, SCREENSIZE, feedCard.getFeedCardHeight());
+			// retrieving all the posts from database
+			List<Post> posts = dao.getPosts();
+
+			// lets publish each post returned
+			for (Post post : posts) {
+				/**
+				 * TODO Better strategy here is to have a lazy loading of the posts, specially
+				 * because the memory of each picture
+				 */
+				FeedCard feedCard = new FeedCard(post);
+				sc.add(feedCard, LEFT, AFTER + MaterialConstants.BORDER_SPACING, SCREENSIZE,
+						feedCard.getFeedCardHeight());
+			}
 
 		} catch (Exception e) {
 			MessageBox.showException(e, true);
