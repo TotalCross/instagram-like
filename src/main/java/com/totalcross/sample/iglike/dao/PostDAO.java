@@ -27,6 +27,7 @@ public class PostDAO {
 		 */
 		List<Post> posts = new ArrayList<Post>();
 
+		// creating manually each post just to simulate database access...
 		Post post = new Post();
 		posts.add(post);
 		post.setLikes(15);
