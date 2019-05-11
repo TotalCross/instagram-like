@@ -29,6 +29,12 @@ public class IGLike extends MainWindow {
 		setUIStyle(Settings.MATERIAL_UI);
 	}
 
+	static {
+		Settings.applicationId = "TCIG";
+		Settings.appVersion = "1.0.1";
+		Settings.iosCFBundleIdentifier = "br.com.softsite.instagram";
+	}
+
 	@Override
 	public void initUI() {
 		try {
