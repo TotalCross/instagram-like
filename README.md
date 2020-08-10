@@ -1,4 +1,5 @@
-# instagram_like
+# instagram-like
+
 Sample app to show how to the use/scale images, simulating the Instagram application
 
 ## Introduction
